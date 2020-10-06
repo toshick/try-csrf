@@ -2,11 +2,13 @@ package routers
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/toshick/try-csrf/app/context"
 	"github.com/toshick/try-csrf/app/controllers"
 	"github.com/toshick/try-csrf/app/model"
@@ -39,11 +41,13 @@ func SetRoutes() {
 	/**
 	 * CORSの許可設定
 	 */
-	// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-	// 	Skipper:      middleware.DefaultSkipper,
-	// 	AllowOrigins: []string{"http://localhost:8080"},
-	// 	AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete, http.MethodOptions},
-	// }))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		Skipper:          middleware.DefaultSkipper,
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete, http.MethodOptions},
+		AllowCredentials: true,
+		AllowHeaders:     []string{"*"}, //jsに特定のヘッダ情報取得を許可するための設定
+	}))
 
 	/**
 	 * CSRFの対策
