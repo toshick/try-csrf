@@ -1,0 +1,26 @@
+version: '3'
+services:
+  try-csrf:
+    container_name: try-csrf
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '80:8888'
+    stdin_open: true
+    tty: true
+    restart: always
+  # nuxtweb:
+  #   container_name: nuxtweb
+  #   image: node:13.8.0-stretch-slim
+  #   build:
+  #     context: front-ronten
+  #   ports:
+  #     - 127.0.0.1:3002:3000
+  #   volumes:
+  #     - .:/front-ronten:/go/src/github.com/ronten-maker/front-ronten
+  #   stdin_open: true
+  #   tty: true
+  #   working_dir: /go/src/github.com/ronten-maker/front-ronten
+  #   command: >
+  #     npm run dev

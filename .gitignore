@@ -12,3 +12,5 @@ dist
 .env
 
 gin-bin
+
+public
