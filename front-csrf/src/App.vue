@@ -12,49 +12,60 @@
   </section>
   <!-- aリンク -->
   <section>
-    <h2><span>{{urlUsers}}</span> へ移動</h2>
+    <h2>
+      <span class="ok">OK</span>
+      <span>{{urlUsers}}</span> へ移動</h2>
     <a :href="urlUsers">{{urlUsers}}</a>
+    
     <ul class="memo">
       <li>ページ遷移なのでcookie送信される</li>
+      <li>cookieにSameSite:Laxなし → cookie送信される</li>
+      <li>cookieにSameSite:Lax → cookie送信される</li>
     </ul>
   </section>
   <!-- formからPOST -->
   <section>
-    <h2><span>{{urlUsers}}</span> へForm Post</h2>
+    <h2>
+      <span class="warn">これがうまくいかない</span>
+      <span>{{urlUsers}}</span> へForm Post</h2>
     <form :action="urlUsers" method="POST">
       <input name="myvalue" value="ispost" />
       <button type="submit">formからPOST</button>
     </form>
     <ul class="memo">
-      <li>cookieにSameSite:Lax関係なくcookie送信されない</li>
+      <li>cookieにSameSite:Laxなし → cookie送信される</li>
+      <li>cookieにSameSite:Lax → cookie送信されない</li>
     </ul>
   </section>
   <!-- iframe -->
   <section>
-    <h2><span>{{urlUsers}}</span> へiframeでForm Post</h2>
+    <h2><span class="ok">OK</span><span>{{urlUsers}}</span> へiframeでForm Post</h2>
     <iframe v-if="visibleIframe" src="./iframe.html">
     </iframe>
     <button @click="iframePost">iframeのformからPOST</button>
     
+    
     <ul class="memo">
       <li>cookie送信されない</li>
+      <li>正しい？</li>
     </ul>
   </section>
   <!-- formからGET -->
   <section>
-    <h2><span>{{urlUsers}}</span> へForm Get</h2>
+    <h2><span class="ok">OK</span><span>{{urlUsers}}</span> へForm Get</h2>
     <form :action="urlUsers" method="GET">
       <input name="myvalue" value="isget" />
       <button type="submit">formからGET</button>
     </form>
     <ul class="memo">
-      <li>cookieにSameSite:Lax関係なくcookie送信される</li>
+      <li>cookieにSameSite:Laxなし → cookie送信される</li>
+      <li>cookieにSameSite:Lax → cookie送信される</li>
       <li>ページ遷移と同様だから当然か</li>
     </ul>
   </section>
   <!-- section -->
   <section>
-    <h2>get users by fetch</h2>
+    <h2><span class="ok">OK</span>get users by fetch</h2>
     <button @click="getUsers">fetch getUsers</button>
     <ul>
       <li v-for="i in items" :key="`${i.name}`">
@@ -63,12 +74,15 @@
       </li>
     </ul>
     <ul class="memo">
-      <li>cookie送信されない</li>
+      <li>cookieにSameSite:Laxなし → cookie送信されない</li>
+      <li>cookieにSameSite:Lax → cookie送信されない</li>
+      <li>正しい？</li>
     </ul>
   </section>
   <!-- section -->
   <section>
-    <h2>jsから
+    <h2><span class="ok">OK</span>
+    jsから
       <span>{{urlUsers}}</span>へPOST</h2>
     <p>（X-XSRF-TOKENヘッダ付き）</p>
     <button  @click="() => doPost(urlUsers)">doPostUsers</button>
@@ -76,7 +90,9 @@
     <ul class="memo">
       <li>X-XSRF-TOKENヘッダ付きなのでプリフライトあり</li>
       <li> 'Content-Type': 'application/json'なのでプリフライトあり</li>
-      <li>cookie送信されない</li>
+      <li>cookieにSameSite:Laxなし → cookie送信されない</li>
+      <li>cookieにSameSite:Lax → cookie送信されない</li>
+      <li>正しい？</li>
     </ul>
   </section>
   <!-- section -->
@@ -117,7 +133,7 @@
   <h2>フォームからのPOST対策</h2>
   <ul>
     <li>フォームからpostするとドメイン関係なくcookie送信されるが、<s>CookieのSameSite:Laxというオプションをセットするとformでもcookieを送信しなくなる</s></li>
-    <li>ウソのようだ</li>
+    <li class="warn">はずだが、Lax関係なく送信を確認できない</li>
   </ul>
   <h2>プリフライトでのチェック</h2>
   <ul>
@@ -275,7 +291,7 @@ h2{
 h2 span {
   margin: 0 10px;
   color: brown;
-
+  vertical-align: middle;
 }
 input{
   font-size: 16px;
@@ -325,5 +341,20 @@ td:nth-child(1){
 b {
   color: darkred;
 }
-
+.warn{
+  background-color: red;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-left: 1em;
+}
+.ok{
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-left: 1em;
+}
 </style>

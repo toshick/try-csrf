@@ -1,26 +1,33 @@
 version: '3'
 services:
+  # ------------
+  # backend
+  # ------------
   try-csrf:
     container_name: try-csrf
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - '80:8888'
+      - '8888:8888'
     stdin_open: true
     tty: true
     restart: always
-  # nuxtweb:
-  #   container_name: nuxtweb
-  #   image: node:13.8.0-stretch-slim
-  #   build:
-  #     context: front-ronten
+  # ------------
+  # frontend
+  # ------------
+  # frontend:
+  #   container_name: try-csrf-front
+  #   image: node:13.8.0
+  #   # build: 
+  #   #   context: ./front-csrf
   #   ports:
-  #     - 127.0.0.1:3002:3000
+  #     - 8080:8080
   #   volumes:
-  #     - .:/front-ronten:/go/src/github.com/ronten-maker/front-ronten
+  #     - ./front-csrf:/go/src/github.com/toshick/try-csrf/front-csrf
   #   stdin_open: true
   #   tty: true
-  #   working_dir: /go/src/github.com/ronten-maker/front-ronten
+  #   working_dir: /go/src/github.com/toshick/try-csrf/front-csrf
   #   command: >
-  #     npm run dev
+  #     npm run serve
+

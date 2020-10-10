@@ -14,6 +14,7 @@ LABEL maintainer "toshick"
 ENV PATH $PATH:/usr/local/go/bin
 ENV GO111MODULE on
 ENV GO_ENV prd
+ENV HTTPPORT 8888
 
 ADD . /go/src/github.com/toshick/try-csrf/
 WORKDIR /go/src/github.com/toshick/try-csrf/
@@ -23,5 +24,3 @@ WORKDIR /go/src/github.com/toshick/try-csrf/
 
 CMD ["/usr/local/go/bin/go", "run", "/go/src/github.com/toshick/try-csrf/app/main.go"]
 # CMD ["/bin/bash"]
-
-EXPOSE 80
