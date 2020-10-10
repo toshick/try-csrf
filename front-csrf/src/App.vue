@@ -120,13 +120,21 @@
           <span v-if="postResult[urlTop]" class="postResult">{{ postResult[urlTop] }}</span>
         </section>
         <!-- section -->
-        <section v-if="false">
+        <section>
           <h2>
             imgから <span>{{ urlTop }}</span
-            >へPOST
+            >へGET
           </h2>
           <button @click="() => doGet()">doGet</button>
-          <img v-if="visibleImg" src="./cancrow.png" alt="" />
+          <span>{{ visibleImg }}</span>
+          <img v-if="visibleImg" :src="visibleImg" alt="" />
+
+          <ul class="memo">
+            <li>（Chrome、Safari）cookie送信されない</li>
+            <li>（FireFox）cookie送信される</li>
+            <li>cookieにSameSite:Laxなし → cookie送信される</li>
+            <li>cookieにSameSite:Lax → cookie送信されない</li>
+          </ul>
         </section>
 
         <h2>
@@ -202,7 +210,7 @@ export default Vue.extend({
       items: [],
       postResult: {},
       cookies: '',
-      visibleImg: false,
+      visibleImg: '',
       visibleIframe: false,
     };
   },
@@ -229,7 +237,10 @@ export default Vue.extend({
   },
   methods: {
     doGet() {
-      this.visibleImg = !this.visibleImg;
+      this.visibleImg = `${this.urlTop}cancrow.png?rnd=${Math.random()}`;
+      setTimeout(() => {
+        this.visibleImg = '';
+      }, 1000);
     },
     getUsers() {
       fetch(this.urlUsers)
@@ -321,7 +332,7 @@ main {
   margin: 0 auto;
 }
 section {
-  border-top: dashed 1px #aaa;
+  border-bottom: dashed 1px #aaa;
   padding: 10px 0 10px;
 }
 h2 {
